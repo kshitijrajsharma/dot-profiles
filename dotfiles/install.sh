@@ -25,6 +25,11 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     fi
 fi
 
+# --- Getnf (Nerd Font Installer) ---
+if ! command -v getnf &> /dev/null; then
+    curl -fsSL https://raw.githubusercontent.com/getnf/getnf/main/install.sh | bash
+fi
+
 # --- Oh My Zsh Setup ---
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
     sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
