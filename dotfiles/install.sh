@@ -52,6 +52,12 @@ if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then
     mv "$HOME/.zshrc" "$HOME/.zshrc.backup"
 fi
 
+# git alias
+git config --global alias.uncommit 'reset --soft HEAD~1'
+
+git config --global alias.reset-local '!f(){ b=$(git rev-parse --abbrev-ref HEAD); r=${1:-origin}; git fetch -q $r || return 1; git reset --hard $r/$b || return 2; git clean -fd || return 3; echo "Reset to $r/$b"; }; f'
+
+
 # Link .zshrc via the anchor
 ln -sf "$HOME/.dotfiles_anchor/.zshrc" "$HOME/.zshrc"
 
