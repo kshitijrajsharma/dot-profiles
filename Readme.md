@@ -9,7 +9,7 @@ It automates the installation of shell themes, plugins, and custom aliases.
 * Plugins:
     * zsh-autosuggestions
     * zsh-syntax-highlighting
-    * zsh-history-substring-search
+    * history-substring-search (bundled with Oh My Zsh)
 * OS Awareness: Detects Mac (Homebrew) vs Linux (APT / DNF).
 
 ---
@@ -28,10 +28,10 @@ It automates the installation of shell themes, plugins, and custom aliases.
     ./install.sh
     ```
 
-3.  Restart & Configure:
-    * Restart your terminal.
-    * The Powerlevel10k wizard will start automatically.
-    * (If it doesn't start, type `p10k configure`).
+3.  Configure Powerlevel10k:
+    * The script ends by launching zsh, so the Powerlevel10k wizard starts automatically.
+    * If you skip it or want to redo it later, run `p10k configure`.
+    * Set your terminal font to **MesloLGS NF** so the prompt glyphs render correctly.
 
 ---
 

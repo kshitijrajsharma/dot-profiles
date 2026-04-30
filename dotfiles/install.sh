@@ -1,4 +1,5 @@
 #!/bin/bash
+set -u
 
 REPO_DIR="$(cd "$(dirname "$0")" && pwd)"
 
@@ -16,14 +17,16 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
     if command -v apt &> /dev/null; then
         sudo apt update
-        sudo apt install -y zsh git fonts-powerline
+        sudo apt install -y zsh git curl fontconfig
     elif command -v dnf &> /dev/null; then
-        sudo dnf install -y zsh git powerline-fonts util-linux-user
+        sudo dnf install -y zsh git curl fontconfig util-linux-user
     fi
 fi
 
 # macOS gets MesloLGS NF from the brew cask above; on Linux install it via getnf.
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # getnf lands in ~/.local/bin, which isn't on PATH in this bash session yet.
+    export PATH="$HOME/.local/bin:$PATH"
     if ! command -v getnf &> /dev/null; then
         curl -fsSL https://raw.githubusercontent.com/getnf/getnf/main/install.sh | bash
     fi
@@ -32,8 +35,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     fi
 fi
 
+# KEEP_ZSHRC=yes prevents OMZ from replacing our symlinked .zshrc on install.
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    RUNZSH=no KEEP_ZSHRC=yes sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
 
 ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
@@ -44,8 +48,9 @@ ZSH_CUSTOM="$HOME/.oh-my-zsh/custom"
 [ ! -d "$ZSH_CUSTOM/plugins/zsh-autosuggestions" ] && git clone https://github.com/zsh-users/zsh-autosuggestions "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
 [ ! -d "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting" ] && git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$ZSH_CUSTOM/plugins/zsh-syntax-highlighting"
 
+# Timestamped backup so re-runs don't clobber a previous backup.
 if [ -f "$HOME/.zshrc" ] && [ ! -L "$HOME/.zshrc" ]; then
-    mv "$HOME/.zshrc" "$HOME/.zshrc.backup"
+    mv "$HOME/.zshrc" "$HOME/.zshrc.backup.$(date +%s)"
 fi
 
 git config --global alias.uncommit 'reset --soft HEAD~1'
@@ -53,12 +58,13 @@ git config --global alias.reset-local '!f(){ b=$(git rev-parse --abbrev-ref HEAD
 
 ln -sf "$HOME/.dotfiles_anchor/.zshrc" "$HOME/.zshrc"
 
-ZSH_BIN="$(command -v zsh)"
-if [ -n "$ZSH_BIN" ] && [ "$SHELL" != "$ZSH_BIN" ]; then
+ZSH_BIN="$(command -v zsh || true)"
+if [ -n "$ZSH_BIN" ] && [ "${SHELL:-}" != "$ZSH_BIN" ]; then
     if ! grep -qx "$ZSH_BIN" /etc/shells 2>/dev/null; then
         echo "$ZSH_BIN" | sudo tee -a /etc/shells >/dev/null
     fi
     chsh -s "$ZSH_BIN" || echo "chsh failed; run 'chsh -s $ZSH_BIN' manually."
 fi
 
-echo "Setup Complete. Open a new terminal (or run 'exec zsh') to start using zsh."
+echo "Setup complete. Launching zsh — the Powerlevel10k wizard will start."
+exec "$ZSH_BIN" -l
