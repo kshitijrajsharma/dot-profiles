@@ -10,7 +10,7 @@ It automates the installation of shell themes, plugins, and custom aliases.
     * zsh-autosuggestions
     * zsh-syntax-highlighting
     * zsh-history-substring-search
-* OS Awareness: Detects Mac (Homebrew) vs Linux (APT).
+* OS Awareness: Detects Mac (Homebrew) vs Linux (APT / DNF).
 
 ---
 
@@ -38,7 +38,7 @@ It automates the installation of shell themes, plugins, and custom aliases.
 ## Management
 
 ### Adding new Aliases
-1.  Open `~/dotfiles/aliases.zsh`.
+1.  Open `dot-profiles/dotfiles/aliases.zsh`.
 2.  Add your new alias.
 3.  Commit & Push:
     ```bash
@@ -50,7 +50,7 @@ It automates the installation of shell themes, plugins, and custom aliases.
 ### Updating on another machine
 1.  Go to your dotfiles folder:
     ```bash
-    cd ~/dotfiles
+    cd dot-profiles
     ```
 2.  Pull changes and reload:
     ```bash
