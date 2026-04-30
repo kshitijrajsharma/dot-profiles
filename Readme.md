@@ -18,12 +18,12 @@ It automates the installation of shell themes, plugins, and custom aliases.
 
 1.  Clone the repository:
     ```bash
-    git clone [https://github.com/kshitijrajsharma/dot-profiles.git](https://github.com/kshitijrajsharma/dot-profiles.git) ~/dotfiles
+    git clone https://github.com/kshitijrajsharma/dot-profiles.git
     ```
 
 2.  Run the setup script:
     ```bash
-    cd ~/dotfiles
+    cd dotfiles
     chmod +x install.sh
     ./install.sh
     ```
