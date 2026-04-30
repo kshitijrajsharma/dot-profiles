@@ -23,7 +23,7 @@ It automates the installation of shell themes, plugins, and custom aliases.
 
 2.  Run the setup script:
     ```bash
-    cd dot-profiles
+    cd dotfiles
     chmod +x install.sh
     ./install.sh
     ```
