@@ -18,10 +18,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     brew install --cask iterm2 font-meslo-lg-nerd-font
 
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    # Linux (APT)
+    # Linux (APT / DNF)
     if command -v apt &> /dev/null; then
         sudo apt update
         sudo apt install -y zsh git fonts-powerline
+    elif command -v dnf &> /dev/null; then
+        sudo dnf install -y zsh git powerline-fonts util-linux-user
     fi
 fi
 

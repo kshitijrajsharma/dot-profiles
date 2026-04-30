@@ -16,5 +16,9 @@ alias glg='git log --graph --oneline --decorate --all'
 if [[ "$OSTYPE" == "darwin"* ]]; then
     alias flush="dscacheutil -flushcache && killall -HUP mDNSResponder"
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
-    alias aptup='sudo apt update && sudo apt upgrade'
+    if command -v apt &> /dev/null; then
+        alias aptup='sudo apt update && sudo apt upgrade'
+    elif command -v dnf &> /dev/null; then
+        alias dnfup='sudo dnf upgrade --refresh'
+    fi
 fi

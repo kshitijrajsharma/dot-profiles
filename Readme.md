@@ -1,6 +1,6 @@
 # My Dotfiles
 
-A cross-platform Zsh configuration for macOS and Linux (KDE/Ubuntu).
+A cross-platform Zsh configuration for macOS and Linux (Ubuntu/Debian and Fedora).
 It automates the installation of shell themes, plugins, and custom aliases.
 
 ## Contents
